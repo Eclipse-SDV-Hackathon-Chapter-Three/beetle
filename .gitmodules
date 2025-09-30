@@ -1,0 +1,3 @@
+[submodule "ota-challenge"]
+	path = ota-challenge
+	url = git@github.com:Eclipse-SDV-Hackathon-Chapter-Three/challenge-mission-update-possible.git
