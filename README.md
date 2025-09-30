@@ -1,9 +1,7 @@
-# SolutionPlan_Template
+# Beetle Team Solution
 # 1. Your Team at a Glance
 
-## Team Name / Tagline  
-
-### Beetle
+## Beetle
 
 ![Beetle team logo](./docs/img/team-logo.png "Beetle Team")
 
