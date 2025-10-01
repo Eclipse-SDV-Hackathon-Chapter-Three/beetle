@@ -18,4 +18,9 @@ class TargetController(private val targetService: TargetService) {
     fun getTarget(@PathVariable targetName: String): TargetResponse? {
         return targetService.getTarget(targetName)
     }
+
+    @DeleteMapping("/{targetName}")
+    fun deleteTarget(@PathVariable targetName: String) {
+        targetService.deleteTarget(targetName)
+    }
 }

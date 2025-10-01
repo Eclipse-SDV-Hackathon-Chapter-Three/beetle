@@ -44,4 +44,20 @@ class TargetClient(private val restClient: RestClient,
             .retrieve()
             .body(TargetResponse::class.java)
     }
+
+    fun deleteTarget(targetName: String) {
+        val userRequest = UserRequest().apply {
+            this.username = this@TargetClient.username
+            this.password = this@TargetClient.password
+        }
+        val userResponse = authClient.authenticate(userRequest)
+
+        val response = restClient.delete()
+            .uri("/targets/registry/{targetName}", targetName)
+            .header("Authorization", "Bearer ${userResponse!!.accessToken}")
+            .retrieve()
+            .toBodilessEntity()
+
+        println("Delete Status: ${response.statusCode}")
+    }
 }
