@@ -1,0 +1,70 @@
+version: "3.9"
+
+services:
+  symphony-api:
+    image: ghcr.io/eclipse-symphony/symphony-api:0.48-proxy.41
+    container_name: symphony-api
+    environment:
+      - USE_SERVICE_ACCOUNT_TOKENS=false
+      - SYMPHONY_API_URL=http://localhost:8082/v1alpha2/
+      - CONFIG=/symphony-api-no-k8s.json
+      - LOG_LEVEL=Error
+    volumes:
+      - ./providers:/extensions
+    network_mode: host
+    ports:
+      - "8082:8082"
+    restart: unless-stopped
+
+  symphony-portal:
+    image: ghcr.io/eclipse-symphony/symphony-portal:0.48-proxy.40
+    container_name: symphony-portal
+    environment:
+      - SYMPHONY_API=http://symphony-api:8082/v1alpha2/
+      - NEXTAUTH_SECRET=SymphonyKey
+      - NEXTAUTH_URL=http://localhost:3000
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - symphony-api
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: mosquitto
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-logs:/mosquitto/log
+    ports:
+      - "1883:1883"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -h localhost -p 1883 -t '$$SYS/#' -C 1 -W 3 >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ankaios-vehicle:
+    build:
+      context: ./vehicle
+      dockerfile: Dockerfile
+    container_name: ankaios-vehicle
+    ports:
+      - "25551:25551"
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  postgres:
+    image: postgres:15
+    command: postgres -N 200
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+volumes:
+  mosquitto-data: {}
+  mosquitto-logs: {}

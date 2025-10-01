@@ -1,0 +1,27 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    session.timeout: 5s
+
+spring:
+  application:
+    name: beetle-backend
+  datasource:
+    url: jdbc:postgresql://${application.db.endpoint}/${application.db.name}?currentSchema=${application.db.schema}
+    username: ${application.db.user}
+    password: ${application.db.password}
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connectionTimeout: 30000
+
+application:
+  db:
+    endpoint: localhost:5432 #overwritten by cloudformation env variable
+    user: postgres #overwritten by cloudformation env variable
+    password: postgres #overwritten by cloudformation env variable
+    name: postgres  #overwritten by cloudformation env variable
+    schema: public
+    batch-size: 50
