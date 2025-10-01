@@ -1,34 +1,34 @@
 package com.beetle.backend.client.request
 
-class TargetRequest {
-    var metadata: TargetMetadataRequest? = null
-    var spec: TargetSpecRequest? = null
-}
+data class TargetRequest(
+    val metadata: TargetMetadataRequest? = null,
+    val spec: TargetSpecRequest? = null
+)
 
-class TargetMetadataRequest {
-    var name: String? = null
-    var labels: Map<String, String>? = null
-}
+data class TargetMetadataRequest(
+    val name: String? = null,
+    val labels: Map<String, String>? = null
+)
 
-class TargetSpecRequest {
-    var displayName: String? = null
-    var forceRedeploy: Boolean? = null
-    var components: List<TargetComponentRequest>? = null
-    var topologies: List<TopologyRequest>? = null
-}
+data class TargetSpecRequest(
+    val displayName: String? = null,
+    val forceRedeploy: Boolean? = null,
+    val components: List<TargetComponentRequest>? = null,
+    val topologies: List<TopologyRequest>? = null
+)
 
-class TargetComponentRequest {
-    var name: String? = null
-    var type: String? = null
-    var properties: Map<String, String>? = null
-}
+data class TargetComponentRequest(
+    val name: String? = null,
+    val type: String? = null,
+    val properties: Map<String, String>? = null
+)
 
-class TopologyRequest {
-    var bindings: List<BindingRequest>? = null
-}
+data class TopologyRequest(
+    val bindings: List<BindingRequest>? = null
+)
 
-class BindingRequest {
-    var role: String? = null
-    var provider: String? = null
-    var config: Map<String, String>? = null
-}
+data class BindingRequest(
+    val role: String? = null,
+    val provider: String? = null,
+    val config: Map<String, String>? = null
+)
