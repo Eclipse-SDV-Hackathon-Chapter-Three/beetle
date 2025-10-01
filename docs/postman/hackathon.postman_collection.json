@@ -1,0 +1,281 @@
+{
+	"info": {
+		"_postman_id": "f8156010-4e4e-4035-a9e9-8825513a793e",
+		"name": "hackathon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38627843",
+		"_collection_link": "https://eese44.postman.co/workspace/hackathon~4fd2b8a8-e2a9-4a54-b532-631a55551761/collection/38627843-f8156010-4e4e-4035-a9e9-8825513a793e?action=share&source=collection_link&creator=38627843"
+	},
+	"item": [
+		{
+			"name": "Solution Container",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"metadata\": {\n        \"name\": \"{{SOLUTION_NAME}}\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{SYMPHONY_BASE_URL}}/solutioncontainers/{{SOLUTION_NAME}}",
+					"protocol": "http",
+					"host": [
+						"{{SYMPHONY_BASE_URL}}"
+					],
+					"path": [
+						"solutioncontainers",
+						"{{SOLUTION_NAME}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Solution",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SYMPHONY_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"metadata\": {\r\n        \"labels\": {\r\n            \"label-2\": \"value-1\"\r\n        }\r\n    },\r\n    \"spec\":{\r\n        \"displayName\": \"{{SOLUTION_NAME}}-v-v2\",\r\n        \"rootResource\": \"{{SOLUTION_NAME}}\", \r\n        \"components\": [\r\n            {\r\n                \"name\": \"{{SOLUTION_NAME}}\",\r\n                \"type\": \"container\",\r\n                \"properties\": {\r\n                    \"container.image\": \"redis:latest\"\r\n                }\r\n            }\r\n        ],\r\n        \"metadata\": {\r\n            \"foo\": \"bar\"            \r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{SYMPHONY_BASE_URL}}/solutions/{{SOLUTION_NAME}}-v-v2",
+					"protocol": "http",
+					"host": [
+						"{{SYMPHONY_BASE_URL}}"
+					],
+					"path": [
+						"solutions",
+						"{{SOLUTION_NAME}}-v-v2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Solution",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SYMPHONY_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{SYMPHONY_BASE_URL}}/solutions/{{SOLUTION_NAME}}-v-v2",
+					"protocol": "http",
+					"host": [
+						"{{SYMPHONY_BASE_URL}}"
+					],
+					"path": [
+						"solutions",
+						"{{SOLUTION_NAME}}-v-v2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Target",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SYMPHONY_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"metadata\": {\r\n        \"labels\": {\r\n            \"foo\": \"bar\"\r\n        }\r\n    },\r\n    \"spec\": {\r\n        \"displayName\": \"{{TARGET_NAME}}\",\r\n        \"topologies\": [\r\n            {\r\n                \"bindings\": [\r\n                    {\r\n                        \"role\": \"instance\",\r\n                        \"provider\": \"providers.target.k8s\",\r\n                        \"config\": {\r\n                            \"inCluster\": \"{{TARGET_IN_CLUSTER}}\",\r\n                            \"deploymentStrategy\": \"services\"\r\n                        }\r\n                    }\r\n                ]\r\n            }\r\n        ]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{SYMPHONY_BASE_URL}}/targets/registry/{{TARGET_NAME}}",
+					"protocol": "http",
+					"host": [
+						"{{SYMPHONY_BASE_URL}}"
+					],
+					"path": [
+						"targets",
+						"registry",
+						"{{TARGET_NAME}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Target",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SYMPHONY_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{SYMPHONY_BASE_URL}}/targets/registry/{{TARGET_NAME}}",
+					"protocol": "http",
+					"host": [
+						"{{SYMPHONY_BASE_URL}}"
+					],
+					"path": [
+						"targets",
+						"registry",
+						"{{TARGET_NAME}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Instance",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SYMPHONY_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"metadata\": {\r\n        \"labels\": {\r\n            \"foo\": \"bar\"\r\n        }        \r\n    },\r\n    \"spec\": {\r\n        \"displayName\": \"{{INSTANCE_NAME}}\",\r\n        \"solution\": \"{{SOLUTION_NAME}}-v-v2\",\r\n        \"target\": {\r\n            \"name\": \"{{TARGET_NAME}}\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{SYMPHONY_BASE_URL}}/instances/{{INSTANCE_NAME}}",
+					"protocol": "http",
+					"host": [
+						"{{SYMPHONY_BASE_URL}}"
+					],
+					"path": [
+						"instances",
+						"{{INSTANCE_NAME}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Instance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SYMPHONY_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{SYMPHONY_BASE_URL}}/instances/{{INSTANCE_NAME}}",
+					"protocol": "http",
+					"host": [
+						"{{SYMPHONY_BASE_URL}}"
+					],
+					"path": [
+						"instances",
+						"{{INSTANCE_NAME}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
