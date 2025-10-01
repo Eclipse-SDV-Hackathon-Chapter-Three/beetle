@@ -5,11 +5,48 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import VehicleRow, { VehicleData } from './VehicleRow';
 
-const vehicles = [
-  { id: 1, make: 'Volkswagen', model: 'Golf', year: 2022, color: 'Silver' },
-  { id: 2, make: 'Volkswagen', model: 'Jetta', year: 2021, color: 'Blue' },
-  { id: 3, make: 'Volkswagen', model: 'Tiguan', year: 2023, color: 'Red' },
+const vehicles: VehicleData[] = [
+  {
+    id: 1,
+    name: 'Volkswagen Golf',
+    features: [
+      { name: 'ABS', value: 'ABS', status: 'Active' },
+      { name: 'Airbag', value: 'Airbag', status: 'Active' },
+      { name: 'Alarm', value: 'Alarm', status: 'Deactivated' },
+      { name: 'Blind Spot Monitor', value: 'Blind Spot Monitor', status: 'Active' },
+      { name: 'Central Locking', value: 'Central Locking', status: 'Active' },
+      { name: 'Cruise Control', value: 'Cruise Control', status: 'Active' },
+      { name: 'Electric Windows', value: 'Electric Windows', status: 'Update available' },
+    ],
+  },
+  {
+    id: 2,
+    name: 'Volkswagen Jetta',
+    features: [
+      { name: 'ABS', value: 'ABS', status: 'Active' },
+      { name: 'Airbag', value: 'Airbag', status: 'Active' },
+      { name: 'Alarm', value: 'Alarm', status: 'Active' },
+      { name: 'Blind Spot Monitor', value: 'Blind Spot Monitor', status: 'Active' },
+      { name: 'Central Locking', value: 'Central Locking', status: 'Active' },
+      { name: 'Cruise Control', value: 'Cruise Control', status: 'Active' },
+      { name: 'Electric Windows', value: 'Electric Windows', status: 'Active' },
+    ],
+  },
+  {
+    id: 3,
+    name: 'Volkswagen Tiguan',
+    features: [
+      { name: 'ABS', value: 'ABS', status: 'Active' },
+      { name: 'Airbag', value: 'Airbag', status: 'Active' },
+      { name: 'Alarm', value: 'Alarm', status: 'Active' },
+      { name: 'Blind Spot Monitor', value: 'Blind Spot Monitor', status: 'Active' },
+      { name: 'Central Locking', value: 'Central Locking', status: 'Active' },
+      { name: 'Cruise Control', value: 'Cruise Control', status: 'Active' },
+      { name: 'Electric Windows', value: 'Electric Windows', status: 'Active' },
+    ],
+  },
 ];
 
 export default function VehiclesTable() {
@@ -18,22 +55,12 @@ export default function VehiclesTable() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Make</TableCell>
-            <TableCell>Model</TableCell>
-            <TableCell>Year</TableCell>
-            <TableCell>Color</TableCell>
+            <TableCell>Name</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {vehicles.map((vehicle) => (
-            <TableRow key={vehicle.id}>
-              <TableCell>{vehicle.id}</TableCell>
-              <TableCell>{vehicle.make}</TableCell>
-              <TableCell>{vehicle.model}</TableCell>
-              <TableCell>{vehicle.year}</TableCell>
-              <TableCell>{vehicle.color}</TableCell>
-            </TableRow>
+            <VehicleRow vehicle={vehicle} />
           ))}
         </TableBody>
       </Table>
