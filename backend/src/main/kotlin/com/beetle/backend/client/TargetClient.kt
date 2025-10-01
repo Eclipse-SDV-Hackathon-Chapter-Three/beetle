@@ -25,7 +25,23 @@ class TargetClient(private val restClient: RestClient,
             .header("Authorization", "Bearer ${userResponse!!.accessToken}")
             .body(request)
             .retrieve()
+            .toBodilessEntity()
 
-        print(response)
+        println("Status: ${response.statusCode}")
+        println("Headers: ${response.headers}")
+    }
+
+    fun getTarget(targetName: String): TargetResponse? {
+        val userRequest = UserRequest().apply {
+            this.username = this@TargetClient.username
+            this.password = this@TargetClient.password
+        }
+        val userResponse = authClient.authenticate(userRequest)
+
+        return restClient.get()
+            .uri("/targets/registry/{targetName}", targetName)
+            .header("Authorization", "Bearer ${userResponse!!.accessToken}")
+            .retrieve()
+            .body(TargetResponse::class.java)
     }
 }

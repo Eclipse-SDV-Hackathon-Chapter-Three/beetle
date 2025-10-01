@@ -15,4 +15,9 @@ class TargetController(private val targetService: TargetService, val deviceRepos
         val target = deviceRepository.findByDeviceId(targetName)
         targetService.createTarget(targetName, request)
     }
+
+    @GetMapping("/{targetName}")
+    fun getTarget(@PathVariable targetName: String): TargetResponse? {
+        return targetService.getTarget(targetName)
+    }
 }

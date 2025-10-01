@@ -3,6 +3,7 @@ package com.beetle.backend.controller
 import jakarta.persistence.EntityNotFoundException
 import org.hibernate.exception.ConstraintViolationException
 import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus.*
 import org.springframework.http.HttpStatusCode
@@ -19,7 +20,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 /** Catches exceptions during rest operations and returns proper responses. */
 @ControllerAdvice
-class GlobalExceptionHandler(private val logger_: Logger) : ResponseEntityExceptionHandler() {
+class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
+
+    private val logger_: Logger = LoggerFactory.getLogger(GlobalExceptionHandler::class.java)
 
     @ExceptionHandler(EntityNotFoundException::class)
     @ResponseStatus(NOT_FOUND)
