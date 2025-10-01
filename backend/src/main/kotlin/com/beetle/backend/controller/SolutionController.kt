@@ -1,6 +1,5 @@
 package com.beetle.backend.controller
 
-import com.beetle.backend.client.request.SolutionContainerRequest
 import com.beetle.backend.client.request.SolutionRequest
 import com.beetle.backend.service.SolutionService
 import org.springframework.web.bind.annotation.PostMapping
@@ -11,12 +10,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/solutions")
 class SolutionController(private val solutionService: SolutionService) {
-
-    @PostMapping
-    @RequestMapping("/containers")
-    fun createSolutionContainer(@RequestBody solutionContainerRequest: SolutionContainerRequest) {
-        solutionService.createSolutionContainer(solutionContainerRequest)
-    }
 
     @PostMapping
     fun createSolution(@RequestBody solutionRequest: SolutionRequest) {

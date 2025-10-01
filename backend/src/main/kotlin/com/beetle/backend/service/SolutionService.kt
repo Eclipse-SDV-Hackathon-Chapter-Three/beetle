@@ -8,11 +8,8 @@ import org.springframework.stereotype.Service
 @Service
 class SolutionService(private var solutionClient: SolutionClient) {
 
-    fun createSolutionContainer(solutionContainerRequest: SolutionContainerRequest) {
-        solutionClient.createSolutionContainer(solutionContainerRequest)
-    }
-
-    fun createSolution(solutionSolutionRequest: SolutionRequest) =
+    fun createSolution(solutionSolutionRequest: SolutionRequest) {
         solutionClient.createSolution(solutionSolutionRequest)
+    }
 
 }

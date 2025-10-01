@@ -1,5 +1,6 @@
 package com.beetle.backend.client
 
+import com.beetle.backend.client.request.SolutionContainerMetadataRequest
 import com.beetle.backend.client.response.SolutionResponse
 import com.beetle.backend.client.request.SolutionContainerRequest
 import com.beetle.backend.client.request.SolutionRequest
@@ -13,10 +14,10 @@ class SolutionClient(
     private val restClient: RestClient,
     private val authClient: AuthClient,
     @Value("\${application.orchestrator.auth.username:admin}") private val username: String,
-    @Value("\${application.orchestrator.auth.password}:") private val password: String
+    @Value("\${application.orchestrator.auth.password}") private val password: String
 ) {
 
-    fun createSolutionContainer(request: SolutionContainerRequest) {
+    private fun createSolutionContainer(request: SolutionContainerRequest) {
         val userResponse = authClient.authenticate(UserRequest(username, password))
 
         val response = restClient
@@ -25,18 +26,19 @@ class SolutionClient(
             .header("Authorization", "Bearer %s".format(userResponse!!.accessToken))
             .body(request)
             .retrieve()
-
-        print(response)
     }
 
-    fun createSolution(request: SolutionRequest): SolutionResponse? {
+    fun createSolution(request: SolutionRequest) {
         val userResponse = authClient.authenticate(UserRequest(username, password))
 
-        return restClient.post()
+        createSolutionContainer(SolutionContainerRequest(SolutionContainerMetadataRequest(request.spec!!.rootResource)))
+
+        val response = restClient.post()
             .uri("/solutions/${request.spec!!.displayName}")
             .body(request)
             .header("Authorization", "Bearer %s".format(userResponse!!.accessToken))
             .retrieve()
-            .body(SolutionResponse::class.java)
+
+        print(response)
     }
 }
