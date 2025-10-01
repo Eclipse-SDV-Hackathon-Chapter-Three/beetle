@@ -11,4 +11,8 @@ class TargetService(private val targetClient: TargetClient) {
     fun createTarget(targetName: String, request: TargetRequest) {
         targetClient.createTarget(targetName, request)
     }
+
+    fun getTarget(targetName: String): TargetResponse? {
+        return targetClient.getTarget(targetName)
+    }
 }

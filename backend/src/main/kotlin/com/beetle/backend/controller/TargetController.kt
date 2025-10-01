@@ -13,4 +13,9 @@ class TargetController(private val targetService: TargetService) {
     fun createTarget(@PathVariable targetName: String, @RequestBody request: TargetRequest) {
         targetService.createTarget(targetName, request)
     }
+
+    @GetMapping("/{targetName}")
+    fun getTarget(@PathVariable targetName: String): TargetResponse? {
+        return targetService.getTarget(targetName)
+    }
 }
