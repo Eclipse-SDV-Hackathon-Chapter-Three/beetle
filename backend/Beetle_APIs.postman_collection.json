@@ -1,0 +1,64 @@
+{
+	"info": {
+		"name": "Beetle APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Target",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"metadata\": {\n        \"labels\": {\n            \"foo\": \"bar\"\n        }\n    },\n    \"spec\": {\n        \"displayName\": \"test-target\",\n        \"topologies\": [\n            {\n                \"bindings\": [\n                    {\n                        \"role\": \"instance\",\n                        \"provider\": \"providers.target.k8s\",\n                        \"config\": {\n                            \"inCluster\": \"true\",\n                            \"deploymentStrategy\": \"services\"\n                        }\n                    }\n                ]\n            }\n        ]\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/targets/test-target",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"targets",
+						"test-target"
+					]
+				}
+			}
+		},
+		{
+			"name": "Create Instance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"metadata\": {\n        \"labels\": {\n            \"foo\": \"bar\"\n        }\n    },\n    \"spec\": {\n        \"displayName\": \"test-instance\",\n        \"solution\": \"test-solution-v-v2\",\n        \"target\": {\n            \"name\": \"test-target\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/instances",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"instances"
+					]
+				}
+			}
+		}
+	]
+}

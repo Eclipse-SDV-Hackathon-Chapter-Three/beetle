@@ -1,0 +1,353 @@
+openapi: 3.0.3
+info:
+  title: Beetle API
+  description: API for managing solutions, targets, and instances
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  /solutions:
+    post:
+      tags:
+        - Solutions
+      summary: Create solution
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SolutionRequest'
+      responses:
+        '200':
+          description: Solution created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionResponse'
+
+  /solutions/containers:
+    post:
+      tags:
+        - Solutions
+      summary: Create solution container
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SolutionContainerRequest'
+      responses:
+        '200':
+          description: Solution container created successfully
+
+  /targets/{targetName}:
+    post:
+      tags:
+        - Targets
+      summary: Create target
+      parameters:
+        - name: targetName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TargetRequest'
+      responses:
+        '200':
+          description: Target created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetResponse'
+
+  /instances:
+    post:
+      tags:
+        - Instances
+      summary: Create instance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstanceRequest'
+      responses:
+        '200':
+          description: Instance created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstanceResponse'
+
+components:
+  schemas:
+    SolutionRequest:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/SolutionMetadata'
+        spec:
+          $ref: '#/components/schemas/SolutionSpec'
+
+    SolutionMetadata:
+      type: object
+      properties:
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+
+    SolutionSpec:
+      type: object
+      properties:
+        displayName:
+          type: string
+        rootResource:
+          type: string
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/Component'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+
+    Component:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            type: string
+
+    SolutionContainerRequest:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/SolutionContainerMetadata'
+
+    SolutionContainerMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+
+    TargetRequest:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/TargetMetadata'
+        spec:
+          $ref: '#/components/schemas/TargetSpec'
+
+    TargetMetadata:
+      type: object
+      properties:
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+
+    TargetSpec:
+      type: object
+      properties:
+        displayName:
+          type: string
+        topologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Topology'
+
+    Topology:
+      type: object
+      properties:
+        bindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Binding'
+
+    Binding:
+      type: object
+      properties:
+        role:
+          type: string
+        provider:
+          type: string
+        config:
+          type: object
+          additionalProperties:
+            type: string
+
+    InstanceRequest:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/InstanceMetadata'
+        spec:
+          $ref: '#/components/schemas/InstanceSpec'
+
+    InstanceMetadata:
+      type: object
+      properties:
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+
+    InstanceSpec:
+      type: object
+      properties:
+        displayName:
+          type: string
+        solution:
+          type: string
+        target:
+          $ref: '#/components/schemas/InstanceTarget'
+
+    InstanceTarget:
+      type: object
+      properties:
+        name:
+          type: string
+
+    SolutionResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/SolutionResponseMetadata'
+        spec:
+          $ref: '#/components/schemas/SolutionResponseSpec'
+
+    SolutionResponseMetadata:
+      type: object
+      properties:
+        namespace:
+          type: string
+        name:
+          type: string
+        etag:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+
+    SolutionResponseSpec:
+      type: object
+      properties:
+        displayName:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/Component'
+        rootResource:
+          type: string
+
+    TargetResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/TargetResponseMetadata'
+        status:
+          $ref: '#/components/schemas/TargetStatus'
+        spec:
+          $ref: '#/components/schemas/TargetSpec'
+
+    TargetResponseMetadata:
+      type: object
+      properties:
+        namespace:
+          type: string
+        name:
+          type: string
+        etag:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+
+    TargetStatus:
+      type: object
+      properties:
+        provisioningStatus:
+          $ref: '#/components/schemas/ProvisioningStatus'
+        lastModified:
+          type: string
+        deployed:
+          type: integer
+        targets:
+          type: integer
+
+    ProvisioningStatus:
+      type: object
+      properties:
+        operationId:
+          type: string
+        status:
+          type: string
+        error:
+          type: object
+
+    InstanceResponse:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/InstanceResponseMetadata'
+        spec:
+          $ref: '#/components/schemas/InstanceResponseSpec'
+        status:
+          $ref: '#/components/schemas/InstanceStatus'
+
+    InstanceResponseMetadata:
+      type: object
+      properties:
+        namespace:
+          type: string
+        name:
+          type: string
+        etag:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+
+    InstanceResponseSpec:
+      type: object
+      properties:
+        displayName:
+          type: string
+        solution:
+          type: string
+        target:
+          $ref: '#/components/schemas/InstanceTarget'
+
+    InstanceStatus:
+      type: object
+      properties:
+        provisioningStatus:
+          $ref: '#/components/schemas/ProvisioningStatus'
+        lastModified:
+          type: string
+        deployed:
+          type: integer
+        targets:
+          type: integer
