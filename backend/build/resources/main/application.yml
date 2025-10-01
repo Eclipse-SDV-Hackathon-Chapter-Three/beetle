@@ -25,3 +25,6 @@ application:
     name: postgres  #overwritten by cloudformation env variable
     schema: public
     batch-size: 50
+  orchestrator:
+    auth.username: admin
+    auth.password: ""
