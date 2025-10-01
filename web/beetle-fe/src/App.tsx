@@ -8,9 +8,10 @@ import Typography from '@mui/material/Typography';
 export default function App() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static' sx={{ display: 'flex', minWidth: '100vw' }} className='mb-6'>
-        <Toolbar className='flex justify-center'>
-          <Typography variant='h4' component='h1'>
+      <AppBar position='sticky' sx={{ display: 'flex', minWidth: '100vw', justifyContent: 'start' }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center', gap: 1, width: '100%'}}>
+          <img src='/beetle.png' style={{ width: 50, height: 50, marginRight: 8 }} />
+          <Typography sx={{verticalAlign: 'text-bottom', fontSize: 32, fontFamily: 'VWHead-Bold'}}>
             Beetle
           </Typography>
         </Toolbar>

@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: VWHead-Regular;
+    src: url("assets/fonts/VWHead-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: VWHead-Bold;
+    font-weight: bold;
+    src: url("assets/fonts/VWHead-Bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: VWText-Regular;
+    src: url("assets/fonts/VWText-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: VWText-Bold;
+    font-weight: bold;
+    src: url("assets/fonts/VWText-Bold.otf") format("opentype");
+}
+
 body {
   margin: 0;
+  font-family: VWText-Regular, sans-serif;
 }
