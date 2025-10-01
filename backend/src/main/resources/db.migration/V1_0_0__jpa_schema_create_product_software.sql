@@ -32,7 +32,9 @@ $$
                 installed_software        jsonb,
                 created_at                timestamp,
                 updated_at                timestamp,
-                updated_by                varchar(255)
+                updated_by                varchar(255),
+                prod_mode                 boolean      not null default false,
+                country                   varchar(255)
             );
             create index idx_deviceId on devices (device_id);
         end if;

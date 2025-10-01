@@ -13,7 +13,7 @@ data class Device(
 
     val deviceId: String? = null,
 
-    val installationStatus: String? = null,
+    val status: String? = null,
     
     @Column(columnDefinition = "jsonb")
     val installedSoftware: List<String>? = null,
