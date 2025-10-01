@@ -1,22 +1,40 @@
 package com.beetle.backend.service
 
 import com.beetle.backend.client.TargetClient
-import com.beetle.backend.client.request.TargetRequest
+import com.beetle.backend.client.request.*
 import com.beetle.backend.client.response.TargetResponse
-import com.beetle.backend.mapper.TargetMapper
-import com.beetle.backend.repository.TargetRepository
+import com.beetle.backend.repository.DeviceRepository
 import org.springframework.stereotype.Service
 
 @Service
 class TargetService(
-    private val targetClient: TargetClient, private val targetMapper: TargetMapper,
-    private val targetRepository: TargetRepository
+    private val targetClient: TargetClient,
+    private val deviceRepository: DeviceRepository
 ) {
 
-    fun createTarget(targetName: String, request: TargetRequest) {
-        targetClient.createTarget(targetName, request)
-        val target = targetMapper.toEntity(request)
-        targetRepository.save(target)
+    fun createTarget(targetName: String, componentRequest: TargetComponentRequest) {
+        val device = deviceRepository.findByDeviceId(targetName)
+        val installedSoftware = device?.installedSoftware ?: emptyList()
+        
+        val isDifferent = installedSoftware.none { installed ->
+            installed.name == componentRequest.name &&
+            installed.type == componentRequest.type &&
+            installed.properties == componentRequest.properties
+        }
+        
+        if (isDifferent) {
+            val fullRequest = sampleTargetRequest.copy(
+                spec = TargetSpecRequest(
+                    components = listOf(componentRequest)
+                )
+            )
+            targetClient.createTarget(targetName, fullRequest)
+            
+            val updatedDevice = device?.copy(
+                installedSoftware = installedSoftware + componentRequest
+            )
+            updatedDevice?.let { deviceRepository.save(it) }
+        }
     }
 
     fun getTarget(targetName: String): TargetResponse? {

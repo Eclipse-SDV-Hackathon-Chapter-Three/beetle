@@ -1,6 +1,6 @@
 package com.beetle.backend.controller
 
-import com.beetle.backend.client.request.TargetRequest
+import com.beetle.backend.client.request.TargetComponentRequest
 import com.beetle.backend.client.response.TargetResponse
 import com.beetle.backend.repository.DeviceRepository
 import com.beetle.backend.service.TargetService
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*
 class TargetController(private val targetService: TargetService, val deviceRepository: DeviceRepository) {
 
     @PostMapping("/{targetName}")
-    fun createTarget(@PathVariable targetName: String, @RequestBody request: TargetRequest) {
+    fun createTarget(@PathVariable targetName: String, @RequestBody componentRequest: TargetComponentRequest) {
         val target = deviceRepository.findByDeviceId(targetName)
-        targetService.createTarget(targetName, request)
+        targetService.createTarget(targetName, componentRequest)
     }
 
     @GetMapping("/{targetName}")
