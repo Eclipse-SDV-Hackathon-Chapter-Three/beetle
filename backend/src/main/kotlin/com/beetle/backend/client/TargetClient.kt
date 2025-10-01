@@ -25,7 +25,9 @@ class TargetClient(private val restClient: RestClient,
             .header("Authorization", "Bearer ${userResponse!!.accessToken}")
             .body(request)
             .retrieve()
+            .toBodilessEntity()
 
-        print(response)
+        println("Status: ${response.statusCode}")
+        println("Headers: ${response.headers}")
     }
 }

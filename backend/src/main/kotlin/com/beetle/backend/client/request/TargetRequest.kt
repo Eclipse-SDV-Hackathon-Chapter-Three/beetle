@@ -6,12 +6,21 @@ class TargetRequest {
 }
 
 class TargetMetadataRequest {
+    var name: String? = null
     var labels: Map<String, String>? = null
 }
 
 class TargetSpecRequest {
     var displayName: String? = null
+    var forceRedeploy: Boolean? = null
+    var components: List<TargetComponentRequest>? = null
     var topologies: List<TopologyRequest>? = null
+}
+
+class TargetComponentRequest {
+    var name: String? = null
+    var type: String? = null
+    var properties: Map<String, String>? = null
 }
 
 class TopologyRequest {

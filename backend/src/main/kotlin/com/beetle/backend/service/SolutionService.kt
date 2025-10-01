@@ -3,6 +3,8 @@ package com.beetle.backend.service
 import com.beetle.backend.client.SolutionClient
 import com.beetle.backend.client.request.SolutionContainerRequest
 import com.beetle.backend.client.request.SolutionRequest
+import com.beetle.backend.client.response.SolutionResponse
+import com.beetle.backend.repository.DeviceRepository
 import org.springframework.stereotype.Service
 
 @Service
