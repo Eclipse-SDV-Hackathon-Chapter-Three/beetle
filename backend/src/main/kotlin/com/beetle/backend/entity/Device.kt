@@ -1,5 +1,6 @@
 package com.beetle.backend.entity
 
+import com.beetle.backend.client.request.TargetComponentRequest
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -13,10 +14,10 @@ data class Device(
 
     val deviceId: String? = null,
 
-    val installationStatus: String? = null,
-    
+    val status: String? = null,
+
     @Column(columnDefinition = "jsonb")
-    val installedSoftware: List<String>? = null,
+    val installedSoftware: List<TargetComponentRequest>? = null,
 
     val createdAt: LocalDateTime? = null,
 
