@@ -11,6 +11,6 @@ class InstanceMetadataRequest {
 
 class InstanceSpecRequest {
     var displayName: String? = null
-    var solution: SolutionRequest? = null
+    var solution: String? = null
     var target: TargetRequest? = null
 }

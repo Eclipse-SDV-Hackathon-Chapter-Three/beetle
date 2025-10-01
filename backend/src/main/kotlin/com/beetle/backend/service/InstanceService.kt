@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class InstanceService(private val instanceClient: InstanceClient) {
 
-    fun createInstance(request: InstanceRequest): InstanceResponse? {
+    fun createInstance(request: InstanceRequest) {
         return instanceClient.createInstance(request)
     }
 }

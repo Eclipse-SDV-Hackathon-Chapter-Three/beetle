@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 class InstanceController(private val instanceService: InstanceService) {
 
     @PostMapping
-    fun createInstance(@RequestBody request: InstanceRequest): InstanceResponse? {
-        return instanceService.createInstance(request)
+    fun createInstance(@RequestBody request: InstanceRequest) {
+        instanceService.createInstance(request)
     }
 }
