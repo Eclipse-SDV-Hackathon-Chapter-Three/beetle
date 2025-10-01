@@ -1,15 +1,13 @@
 package com.beetle.backend.controller
 
-import io.swagger.v3.oas.annotations.Hidden
 import jakarta.persistence.EntityNotFoundException
-import jakarta.validation.ConstraintViolationException
+import org.hibernate.exception.ConstraintViolationException
 import org.slf4j.Logger
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus.*
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
-import org.springframework.security.access.AccessDeniedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -37,15 +35,7 @@ class GlobalExceptionHandler(private val logger_: Logger) : ResponseEntityExcept
     @ResponseBody
     protected fun handleExceptionBadRequest(exception: Exception, request: WebRequest): ResponseEntity<Any>? {
         val status = BAD_REQUEST
-        val message = when (exception) {
-            is ConstraintViolationException -> {
-                exception.constraintViolations.joinToString(", ") {
-                    "${it.propertyPath}: ${it.message}"
-                }
-            }
-            else -> exception.message ?: status.reasonPhrase
-        }
-        logger_.warn("Bad Request (${status.value()}): $message", exception)
+        logger_.warn("Bad Request (${status.value()}): ${exception.message}", exception)
         return handleExceptionInternal(exception, ErrorMessage(exception.message ?: status.reasonPhrase), HttpHeaders(), status, request)
     }
 
