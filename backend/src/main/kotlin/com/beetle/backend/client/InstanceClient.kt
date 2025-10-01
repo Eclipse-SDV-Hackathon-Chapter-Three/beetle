@@ -14,17 +14,19 @@ class InstanceClient(
     @Value("\${application.orchestrator.auth.username}") private val username: String,
     @Value("\${application.orchestrator.auth.password}") private val password: String) {
 
-    fun createInstance(request: InstanceRequest): InstanceResponse? {
+    fun createInstance(request: InstanceRequest) {
         val userRequest = UserRequest().apply {
             this.username = this@InstanceClient.username
             this.password = this@InstanceClient.password
         }
         val userResponse = authClient.authenticate(userRequest)
 
-        return restClient.post()
+        val response = restClient.post()
             .uri("/instances")
+            .header("Authorization", "Bearer ${userResponse!!.accessToken}")
             .body(request)
             .retrieve()
-            .body(InstanceResponse::class.java)
+
+        print(response)
     }
 }

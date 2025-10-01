@@ -15,7 +15,7 @@ const VehicleInfo = () => {
         <View style={styles.speedContainer}>
           <Speedometer
             value={speed}
-            totalValue={180}
+            totalValue={220}
             text={`${speed} km/h`}
             textStyle={styles.speedText}
             labelStyle={styles.speedText}

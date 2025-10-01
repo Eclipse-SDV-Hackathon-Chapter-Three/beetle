@@ -15,7 +15,7 @@ class InstanceResponseMetadata {
 
 class InstanceResponseSpec {
     var displayName: String? = null
-    var solution: SolutionResponse? = null
+    var solution: String? = null
     var target: TargetResponse? = null
 }
 
