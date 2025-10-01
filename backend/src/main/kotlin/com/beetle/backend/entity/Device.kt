@@ -2,6 +2,8 @@ package com.beetle.backend.entity
 
 import com.beetle.backend.client.request.TargetComponentRequest
 import jakarta.persistence.*
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 import java.time.LocalDateTime
 
 @Entity
@@ -12,16 +14,27 @@ data class Device(
     @SequenceGenerator(name = "devices_sequence", sequenceName = "devices_sequence", allocationSize = 1)
     val id: Long? = null,
 
+    @Column(name = "device_id")
     val deviceId: String? = null,
 
+    @Column(name = "installation_status")
     val status: String? = null,
 
-    @Column(columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     val installedSoftware: List<TargetComponentRequest>? = null,
 
+    @Column(name = "created_at")
     val createdAt: LocalDateTime? = null,
 
+    @Column(name = "updated_at")
     val updatedAt: LocalDateTime? = null,
 
-    val updatedBy: String? = null
+    @Column(name = "updated_by")
+    val updatedBy: String? = null,
+
+    @Column(name = "prod_mode")
+    val prodMode: Boolean = false,
+
+    @Column(name = "country")
+    val country: String? = null
 )
