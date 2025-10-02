@@ -12,7 +12,8 @@ class WebAdminConfig(
 ) : WebMvcConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/api/**").allowedMethods("DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT")
+        registry.addMapping("/v1/vehicles/**").allowedMethods("DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT")
+        registry.addMapping("/**").allowedMethods("DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT")
     }
 
     @Bean
@@ -21,9 +22,9 @@ class WebAdminConfig(
         return RestClient.builder()
             .baseUrl("http://localhost:8082/v1alpha2")
             .requestInterceptor { request, body, execution ->
-                logger.info("Request: {} {}", request.method, request.uri)
+                logger.info("Request: {} {} - Body: {}", request.method, request.uri, String(body))
                 val response = execution.execute(request, body)
-                logger.info("Response: {} {}", response.statusCode, request.uri)
+                logger.info("Response: {} {} - Body: {}", response.statusCode, request.uri, response.body)
                 response
             }
             .build()
