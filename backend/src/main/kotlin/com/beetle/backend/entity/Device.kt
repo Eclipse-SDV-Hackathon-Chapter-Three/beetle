@@ -33,8 +33,8 @@ data class Device(
     val updatedBy: String? = null,
 
     @Column(name = "prod_mode")
-    val prodMode: Boolean = false,
+    var prodMode: Boolean = false,
 
     @Column(name = "country")
-    val country: String? = null
+    var country: String? = null
 )
