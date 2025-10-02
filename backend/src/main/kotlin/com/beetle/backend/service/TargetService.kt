@@ -31,7 +31,9 @@ class TargetService(
             targetClient.createTarget(targetName, fullRequest)
             
             val updatedDevice = device?.copy(
-                installedSoftware = installedSoftware + componentRequest
+                installedSoftware = installedSoftware + componentRequest,
+                country = "PT",
+                prodMode = false
             )
             updatedDevice?.let { deviceRepository.save(it) }
         }
