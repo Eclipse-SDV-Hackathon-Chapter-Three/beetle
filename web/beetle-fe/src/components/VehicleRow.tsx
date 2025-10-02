@@ -20,11 +20,11 @@ export type FeatureStatus = 'Active' | 'Update available' | 'Deactivated';
 export interface Feature {
   name: string;
   value: string;
-  status: FeatureStatus;
+  status: string;
 }
 
 export interface VehicleData {
-  id: number;
+  id: string;
   name: string;
   features: Feature[];
 }
@@ -34,16 +34,16 @@ export interface VehicleRowProps {
 }
 
 function getActions(feature: Feature) {
-    switch (feature.status) {
-        case 'Active':
-            return <Button startIcon={<AppBlockingIcon color='warning' />}>Deactivate</Button>;
-        case 'Update available':
-            return <Button startIcon={<SystemUpdateAltIcon />}>Update</Button>;
-        case 'Deactivated':
-            return <Button startIcon={<DownloadIcon color='success' />}>Activate</Button>;
-        default:
-            return null;
-    }
+  switch (feature.status) {
+    case 'Active':
+      return <Button startIcon={<AppBlockingIcon color='warning' />}>Deactivate</Button>;
+    case 'Update available':
+      return <Button startIcon={<SystemUpdateAltIcon />}>Update</Button>;
+    case 'Deactivated':
+      return <Button startIcon={<DownloadIcon color='success' />}>Activate</Button>;
+    default:
+      return null;
+  }
 }
 
 export default function VehicleRow(props: VehicleRowProps) {
@@ -57,10 +57,10 @@ export default function VehicleRow(props: VehicleRowProps) {
         key={`${String(vehicle.id)}-${vehicle.name.toLowerCase().replace(/\s/, '-')}`}
       >
         <TableCell component='th' scope='row'>
-            <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)} sx={{ marginRight: 1}}>
-                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-            {vehicle.id} - {vehicle.name}
+          <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)} sx={{ marginRight: 1 }}>
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+          {vehicle.id} - {vehicle.name}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -84,12 +84,8 @@ export default function VehicleRow(props: VehicleRowProps) {
                       <TableCell component='th' scope='row'>
                         {feature.name}
                       </TableCell>
-                      <TableCell>
-                        {feature.status}
-                      </TableCell>
-                      <TableCell>
-                        {getActions(feature)}
-                      </TableCell>
+                      <TableCell>{feature.status}</TableCell>
+                      <TableCell>{getActions(feature)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

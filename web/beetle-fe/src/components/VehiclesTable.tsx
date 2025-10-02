@@ -6,10 +6,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import VehicleRow, { VehicleData } from './VehicleRow';
+import { DeviceDto } from '../api/dto/DeviceDto';
+import Skeleton from '@mui/material/Skeleton';
 
-const vehicles: VehicleData[] = [
+const MOCK_VEHICLES: VehicleData[] = [
   {
-    id: 1,
+    id: '1',
     name: 'Volkswagen Golf',
     features: [
       { name: 'ABS', value: 'ABS', status: 'Active' },
@@ -22,7 +24,7 @@ const vehicles: VehicleData[] = [
     ],
   },
   {
-    id: 2,
+    id: '2',
     name: 'Volkswagen Jetta',
     features: [
       { name: 'ABS', value: 'ABS', status: 'Active' },
@@ -35,7 +37,7 @@ const vehicles: VehicleData[] = [
     ],
   },
   {
-    id: 3,
+    id: '3',
     name: 'Volkswagen Tiguan',
     features: [
       { name: 'ABS', value: 'ABS', status: 'Active' },
@@ -49,7 +51,27 @@ const vehicles: VehicleData[] = [
   },
 ];
 
-export default function VehiclesTable() {
+export interface VehiclesTableProps {
+  devices: DeviceDto[];
+  loading: boolean;
+}
+
+function transformDeviceToVehicle(device: DeviceDto): VehicleData {
+  return {
+    id: device.deviceId,
+    name: device.deviceId || 'Unknown',
+    features:
+      device.installedSoftware?.map((software) => ({
+        name: software.name || 'Unknown',
+        value: software.name || 'Unknown',
+        // TODO: Check how to get software installation status
+        status: software.type || 'Unknown',
+      })) || [],
+  };
+}
+
+export default function VehiclesTable({ devices, loading }: VehiclesTableProps) {
+  const vehicles = devices.map(transformDeviceToVehicle);
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -59,9 +81,13 @@ export default function VehiclesTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {vehicles.map((vehicle) => (
-            <VehicleRow vehicle={vehicle} />
-          ))}
+          {loading ? (
+            <Skeleton />
+          ) : vehicles.length > 0 ? (
+            vehicles.map((vehicle) => <VehicleRow vehicle={vehicle} />)
+          ) : (
+            MOCK_VEHICLES.map((vehicle) => <VehicleRow vehicle={vehicle} />)
+          )}
         </TableBody>
       </Table>
     </TableContainer>

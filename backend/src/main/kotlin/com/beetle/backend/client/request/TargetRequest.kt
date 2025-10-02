@@ -7,7 +7,8 @@ data class TargetRequest(
 
 data class TargetMetadataRequest(
     val name: String? = null,
-    val labels: Map<String, String>? = null
+    val labels: Map<String, String>? = null,
+    val topologies: List<TopologyRequest>? = null
 )
 
 data class TargetSpecRequest(
